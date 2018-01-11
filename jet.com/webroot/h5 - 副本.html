@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+<title>新建网页</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<script type="text/javascript">
+    var data = {};
+    //txid 为研发的订单号
+    data={'cmd':'pay','args':{'pid':'com.sina.t1g60','txid':'123456','userdata':'udata','areaID':'901','serverID':'9011','serverName':'1区','roleID':'101','roleName':'半岛铁盒','roleLevel':'10','productName':'100钻石','accountID':'10','extendbox':'哈哈哈','payext':'哈哈啊'}};
+/*
+'areaID'=>'901',    //大区id
+'serverID'=>'9011',     //服务器id
+'serverName'=>'开天9区',   //服务器名
+'roleID'=>'100',       //角色id
+'roleName'=>'屠龙宝刀',     //角色名
+'roleLevel'=>'10',    //角色等级
+'productID'=>'10111',    //商品id
+'productName'=>'倚天剑',  //商品名称
+'accountID'=>'10',    //游戏账号id
+'extendbox'=>'123456',    //扩展参数，用于支付通知发货
+'gateway'=>'wxpay',      //支付类型
+'ktuid'=>'6121312032',        //用户唯一标识
+'token'=>'DCA76E7682BEBE26DA762459CD9FEE49',        //token
+'kt_payext'=>'',    //第三方支付类型，默认为空(用于苹果支付)
+
+
+*/
+    function sendMessage(){
+        window.parent.postMessage(data,'*');    
+    }
+    //https://login.11h5.com/pay/alipay2/alipayapi.php?gameid=123&uid=426529263&product_id=8074&txid=9dfe38e394da422087b2f5f999707b53&backurl=http://play.11h5.com/game/?gameid=123&code=c-28d72ca5464b4d2612d588e0ec8ff995&_v=1510724977908
+    /*
+    gameid=123
+    uid=426529263
+    product_id=8074
+    txid=9dfe38e394da422087b2f5f999707b53
+    backurl=http://play.11h5.com/game/?gameid=123
+
+    */
+</script>
+
+<style type="text/css">
+</style>
+</head>
+    <body>
+        <input type="submit" value="充值" onclick="sendMessage()">
+    </body>
+</html>
+
+<script>
+    
+</script>

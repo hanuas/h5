@@ -1,0 +1,18 @@
+﻿{
+    "sProcessing":   "Processing...",
+    "sLengthMenu":   "_MENU_ Records/Page",
+    "sZeroRecords":  "No mached records",
+    "sInfo":         "Records from _START_ To _END_ , Of total: _TOTAL_ records",
+    "sInfoEmpty":    "Records from 0 To 0 , Of total: 0 records",
+    "sInfoFiltered": "(Filtered by _MAX_ Records)",
+    "sInfoPostFix":  "",
+    "sSearch":       "Search&nbsp;&nbsp; ",
+    "sNew":       "New",
+    "sUrl":          "",
+    "oPaginate": {
+        "sFirst":    "First",
+        "sPrevious": "Pre",
+        "sNext":     "Next",
+        "sLast":     "Last"
+    }
+}

@@ -1,0 +1,69 @@
+php.ini要放开如下注释：
+extension=php_curl.dll（getExchangeRate中有用到）
+date.timezone = Asia/Shanghai
+
+还要安装 Memcache
+
+在以下文件中
+D:\myweb\tour\tour_server\admin\module\common\dt_lib\Database\Driver\Mysql
+改成：
+$pdo = new PDO(
+				"mysql:host={$host};{$port}dbname={$db}",
+				$user,
+				$pass,
+				array(
+					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+					PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8';"
+				)
+			);
+			
+			
+将D:\myweb\tour\tour_server\_app\model\dt_lib\Database\Database.php中的：
+	function select ( $table, $field="*", $where=null )
+	{
+		return $this->query( 'select' )
+			->table( $table )
+			->get( $field )
+			->where( $where )
+			->exec();
+	}
+改为：
+	public function select ( $table, $field="*", $where=null,$order=null )
+	{
+		return $this->query( 'select' )
+			->table( $table )
+			->get( $field )
+			->where( $where )
+			->order( $order )
+			->exec();
+	}
+
+1. 由于项目要上传IPA/APK等大文件，所以需要修改php配置文件关于上传文件大小的限制。
+post_max_size = 320M  //POST数据的最大值
+upload_max_filesize = 300M  //限制本次上传的最大值
+memory_limit = 340M //设定了一个脚本所能够申请到的最大内存字节数。
+2. 
+
+3.由于项目要执行linux sh脚本提交SVN，所以需要安装cygwin模拟linux环境。
+装cygwin需要注意事项：
+	一、cygwin严格区分32位/64位系统版本。
+	二、cygwin安装时必须装svn软件，推荐在安装cygwin时选择装所有软件，以解决各软件的依赖性。
+	三、安装完成需要配置系统的环境变量,将cygwin的bin目录加入到环境变量中。 配置完成需要重启apache。
+
+
+4.布置到LINUX的注意事项：
+  一、linux下严格区分大小写。
+  二、linux下语言编码为utf-8，windows下为gbk,存储文件时如果文件名存在中文，在windows下需要使用iconv()把编码转化为gbk,在linux下不需要,否则会产生乱码问题。
+  三、linux对中文支持不好，尽量不要使用中文，已发现问题：自动提交svn时不能使用任何中文（所要提交的文件名和remark等等）
+  四、nginx配置文件需要 增加 client_max_body_size 300M  设置上传限制文件大小，否则上传大文件会失败。
+  五、权限问题{
+	1.有些命令nginx没有权限执行，如调用svn，java, 需要在调用命令前加sudo。
+	2.用sudo执行命令时会重置环境变量，有时会产生找不到命令的错误，解决方法：修改 /etc/sudoers secure_path = /usr/java/jdk1.8.0_05/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/apktool(命令所在路径)
+	3.用sudo执行命令时需要输入密码才能执行，如何跳过输入密码，解决方法：修改 /etc/sudoers	nginx ALL = (ALL)NOPASSWD:/usr/apktool/apktool,/usr/bin/java,/bin/sed,/usr/apktool/aapt,/usr/apktool/apktool.jar,/usr/java/jdk1.8.0_05/bin/jarsigner,/bin/cp,/bin/rm,/usr/bin/rsync,/bin/chown,/usr/bin/svn（命令所在路径）
+	
+  }
+
+
+
+
+		

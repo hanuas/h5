@@ -1,0 +1,407 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title><?php echo $title;?></title>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="full-screen" content="true">
+<meta name="screen-orientation" content="portrait">
+<meta name="x5-fullscreen" content="true">
+<meta name="360-fullscreen" content="true">
+<meta name="description" content="多纷络旗下的多纷游戏提供好玩的手机小游戏">
+<meta name="keywords" content="多纷 H5 手机 游戏">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="cache" content="no-cache">
+<meta http-equiv="expires" content="0">
+<link href="/static/favicon.ico" rel="bookmark" type="image/x-icon">
+<link href="/static/favicon.ico" rel="icon" type="image/x-icon">
+<link href="/static/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+
+<link href="/static/css/common.css" rel="stylesheet">
+<link href="/static/css/layout.css" rel="stylesheet">
+</head>
+<body style="overflow: hidden">
+<div id="share_logo" style="margin:0 auto;display:none;">
+	<img src="/static/image/share_logo.jpg">
+</div>
+<div id="transit" class="flex flex-v transit" >
+    <!--<img src="//cdn.11h5.com/static/image/poster_xs.png">-->
+    <img src="/static/image/shouping.jpg" style="margin-top:0px"/>
+    <!--
+    <div class="flex-list flex">
+        <p>正在加载</p>
+        <div class="flex">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span>进入本游戏意味着您已阅读并同意本公司<br>在“游戏中心”的用户条例</span>
+    -->
+</div>
+
+<script type="text/javascript" src="/static/js/json2.js"></script>
+<script type="text/javascript" src="/static/js/openApi.js"></script>
+<script type="text/javascript" src="/static/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="/static/js/zepto.min.js"></script>
+<script type="text/javascript" src="/static/js/sdk_base.js"></script>
+<script type="text/javascript" src="/static/js/sdk_host.js"></script>
+<script type="text/javascript" src="http://open.mobile.qq.com/sdk/qqapi.js?_bid=152"></script>
+
+<script>
+	var sdk = window.JET_SDK;
+	var chid = sdk.getURLVar("chid");
+	var query = sdk.getURLQuery(location.href);
+	var trial = sdk.getURLVar("trial");
+	var isShowFloatBox = true;
+	var isShowExitBanner = false;
+	//sdk.gameInfo =  {"url":"http:\/\/api.jet.netkingol.com\/login?gameid=1011","name":"\u4f20\u5947\u6765\u4e86","game_url":"","type":2,"dc_appid":"1","td_appid":"DA39A4E75D0A4DE1A8A2EEB229C84907","ext":{"desktopIcon":"http:\/\/api.jet.netkingol.com\/static\/images\/2017\/1020\/rx_icon-108.png"},"token_type":1,"orientation":0,"wx_option":1,"entry_url":"http:\/\/api.jet.netkingol.com\/game\/?gameid=1011","content_url":"http:\/\/api.jet.netkingol.com\/h5.html","use_vucoupon":0};
+	sdk.gameInfo = <?php echo json_encode($game_info); ?>;
+    sdk.desktopIcon = "<?php echo $game_info['ext']['desktopIcon']; ?>";
+	// 初始化宣传图
+	function initSplash() {
+		setTimeout(function () {
+			$("#splash,#transit").css("opacity",0);
+			setTimeout(function () {
+				$("#splash,#transit").remove();
+			}, 500);
+		}, 1000);
+	}
+
+
+
+	// 准备环境：CPS等
+	function prepareEnv(callback) {
+		if (!sdk.isJetAPP()) {
+			isShowExitBanner = true;
+		}
+		isShowFloatBox = true;
+		callback();
+	}
+	// 加载游戏
+	function loadGame(gameURL, token, orientation) {
+		if (token) {
+            initSplash();
+			var args = {token: token, "_t": Date.now()};
+			if (sdk.isFocus) {
+				args.focus = 1;
+			}
+			if (trial) {
+				args.trial = 1;
+			}
+			var paramKeys = Object.keys(query);
+			for (var i in paramKeys) {
+				var key = paramKeys[i];
+				if (key.indexOf("cp_") == 0) {
+					args[key] = query[key];
+				}
+			}
+			prepareEnv(function(extArgs) {
+				extArgs = extArgs || {};
+				gameURL = sdk.buildURL(gameURL, args);
+				if (Object.keys(extArgs).length) {
+					gameURL = sdk.buildURL(gameURL, extArgs);
+				}
+				if (orientation) {
+					// 横屏游戏
+					$("body").append('<div id="gameFrameDiv" style="width: 100%; height: 100%; position: relative; top: 0px; left: 0px;"><iframe id="gameFrame" name="gameFrame" src="' + gameURL + '" frameborder="no" border="0px" marginwidth="0px" marginheight="0px" scrolling="auto" style="width: 100%; height: 100%;"></iframe></div>');
+				} else {
+					//非横屏游戏
+					if (sdk.isJetAPP()) {
+						$("body").append('<div id="gameFrameDiv" style="width: ' + document.body.scrollWidth + 'px; height: ' + document.body.scrollHeight + 'px; position: relative; top: 0px; left: 0px;"><iframe id="gameFrame" name="gameFrame" src="' + gameURL + '" frameborder="no" border="0px" marginwidth="0px" marginheight="0px" scrolling="auto" style="width: ' + document.body.scrollWidth + 'px; height: ' + document.body.scrollHeight + 'px;"></iframe></div>');
+					} else {
+						$("body").append('<div id="gameFrameDiv" style="width: ' + $(window).width() + 'px; height: ' + $(window).height() + 'px; position: relative; top: 0px; left: 0px;"><iframe id="gameFrame" name="gameFrame" src="' + gameURL + '" frameborder="no" border="0px" marginwidth="0px" marginheight="0px" scrolling="auto" style="width: ' + $(window).width() + 'px; height: ' + $(window).height() + 'px;"></iframe></div>');
+					}
+				}
+				if (isShowExitBanner) {
+					sdk.enableExitBanner();
+				}
+				if (isShowFloatBox) {
+					sdk.enableFloatBox();
+				}
+			});
+			sdk.checkDevice();
+		} else {
+			sdk.auth();
+		}
+	}
+	// 发送消息
+	function postGameMessage(data) {
+		if (window["gameFrame"].postMessage) {
+			window["gameFrame"].postMessage(data, "*");
+		} else if (window["gameFrame"].contentWindow.postMessage) {
+			window["gameFrame"].contentWindow.postMessage(data, "*");
+		}
+	}
+	// 分享完成回调
+	function onShare(data) {
+		sdk.hideShare();
+		postGameMessage({cmd: "onShare", args: data});
+		sendStat("分享完成", 1);
+	}
+	// 支付完成回调
+	function onPay() {
+		postGameMessage({cmd: "onPay"});
+	}
+	// 开始执行主逻辑
+	function start() {
+		var token = sdk.getURLVar("token");
+        if(!sdk.getURLVar("code") && sdk.isWeixin()){
+            sdk.logout(); //微信浏览器登录先清用户信息
+        }
+		if (token) {
+			var url = sdk.setURLVar(location.href, "token", "");
+			sdk.createCode(token, function (data) {
+				if (data["code"]) {
+					url = sdk.setURLVar(url, "code", data["code"]);
+				}
+				location.href = url;
+			});
+		} else {
+			sdk.initHost(function () {
+				sdk.checkNotify();
+				if (sdk.isJetAPP()) {
+					if (sdk.isiOS()) {
+						sdk.initWebViewJavascriptBridge(function () {
+							if (window.WebViewJavascriptBridge) {
+								window.WebViewJavascriptBridge.callHandler("setTitle", document.title);
+							}
+						});
+					} else if (sdk.isAndroid()) {
+                        try {
+                            window.android.setTitle(document.title);
+                        }catch(e){}
+					}
+				}
+				// 初始化
+				sdk.wxInit(onShare, function () {
+					if (sdk.isWeixin() && !parseInt(sdk.gameInfo["wx_option"])) {
+						// 隐藏菜单
+						wx.hideOptionMenu();
+					}
+				});
+				var orientation = sdk.gameInfo["orientation"];
+                orientation = parseInt(orientation);
+				var gameURL = decodeURIComponent(sdk.gameInfo["content_url"]);
+				// 根据所需token类型传递
+				if (sdk.gameInfo["token_type"]) {
+					// 需要的是userToken
+					sdk.getUserToken(sdk.token, function (data) {
+						loadGame(gameURL, data["userToken"], orientation);
+					});
+				} else {
+					// 需要的是token
+					loadGame(gameURL, sdk.token, orientation);
+				}
+				sdk.userPlay();
+				// 启用统计
+				if (sdk.gameInfo["td_appid"]) {
+					initStat(sdk.gameInfo["td_appid"], sdk.uid);
+				}
+			});
+		}
+		// 侦听消息
+		window.addEventListener("message", function (event) {
+            console.log(event);
+			if (event && event.data) {
+				switch (event.data.cmd) {
+					case "config": {
+						break;
+					}
+					case "stat": {
+						sendStat(event.data.args["item"], 1);
+						break;
+					}
+					case "pay": {
+                        sdk.pay(event.data.args, onPay);
+                        break;
+					}
+					case "logout": {
+                        sdk.logout();
+                        break;
+					}
+					case "showShare": {
+						if (!sdk.isQQ() && !sdk.isWeixin() && sdk.isiOS() && sdk.isMobile() && !sdk.isJetAPP()) {
+							onShare("onMenuShareAppMessage");
+						} else {
+							sdk.showShare(event.data.args);
+						}
+						break;
+					}
+                    case "appShare":{
+                        if(sdk.isJetAPP()){
+                            sdk.appShare(event.data.args);
+                        }
+                    }
+					case "addShortcut": {
+                        break;
+					}
+					case "getShareQRInfo": {
+						sdk.getShareQRInfo(function (data) {
+							postGameMessage({cmd: "getShareQRInfo", args: data});
+						}, event.data.args);
+						break;
+					}
+					case "getShareDomain": {
+						sdk.shareDomain(function (data) {
+							postGameMessage({cmd: "getShareDomain", args: data});
+						});
+						break;
+					}
+					// 语音部分
+					case "startRecord": {
+						sdk.startRecord(function (data) {
+							postGameMessage({cmd: "startRecord", args: data});
+						});
+						break;
+					}
+					case "stopRecord": {
+						sdk.stopRecord(function (data) {
+							postGameMessage({cmd: "stopRecord", args: data});
+						});
+						break;
+					}
+					case "uploadVoice": {
+						sdk.uploadVoice(event.data.args, function (data) {
+							postGameMessage({cmd: "uploadVoice", args: data});
+						});
+						break;
+					}
+					case "downloadVoice": {
+						sdk.downloadVoice(event.data.args, function (data) {
+							postGameMessage({cmd: "downloadVoice", args: data});
+						});
+						break;
+					}
+					case "playVoice": {
+						sdk.playVoice(event.data.args, function (data) {
+							postGameMessage({cmd: "playVoice", args: data});
+						});
+						break;
+					}
+					case "stopVoice": {
+						sdk.stopVoice(event.data.args);
+						break;
+					}
+					default: {
+						if (event.data.cmd) {
+							sdk.execMessage(event.data);
+						}
+					}
+				}
+			}
+		}, false);
+	}
+	
+	// 初始化统计
+	function initStat(appid, uid) {
+        /*
+			sdk.loadSingleScript("http://sdk.talkingdata.com/g/h5/v1/" + appid, function() {
+			sdk.loadSingleScript("http://sdk.talkingdata.com/websdk/js/sdk_release.js?v=1.02", function () {
+				window["TDGA"].Account({accountId: uid});
+			});
+		});
+		*/
+	}
+	
+	// 执行统计
+	function sendStat(item, count) {
+		if (window["TDGA"]) {
+			window["TDGA"].onItemUse({item: item, itemNumber: count});
+		}
+	}
+	// 桌面检测
+	function desktopCheck() {
+		$("head").append('<link rel="apple-touch-icon" href="' + sdk.desktopIcon + '" sizes="57x57">');
+		$("head").append('<link rel="apple-touch-icon" href="' + sdk.desktopIcon + '" sizes="72x72">');
+		$("head").append('<link rel="apple-touch-icon" href="' + sdk.desktopIcon + '" sizes="76x76">');
+		$("head").append('<link rel="apple-touch-icon" href="' + sdk.desktopIcon + '" sizes="114x114">');
+		$("head").append('<link rel="apple-touch-icon" href="' + sdk.desktopIcon + '" sizes="120x120">');
+		$("head").append('<link rel="apple-touch-icon" href="' + sdk.desktopIcon + '" sizes="144x144">');
+		$("head").append('<link rel="apple-touch-icon" href="' + sdk.desktopIcon + '" sizes="152x152">');
+		if (sdk.getURLVar("tokenkey")) {
+			if (sdk.isQQ()) {
+				$("body").append('<img class="guide guide-top" src="'+sdk.cdnHost+'/static/image/guide/guide_qq.jpg" >');
+			} else if (sdk.isWeixin()) {
+				$("body").append('<img class="guide guide-top" src="'+sdk.cdnHost+'/static/image/guide/guide_wx.jpg" >');
+			} else if (sdk.isSafari() && !sdk.isDesktopApp()) {
+				$("body").append('<img class="guide guide-bottom" src="'+sdk.cdnHost+'/static/image/guide/guide_desktop.jpg" >');
+			}
+		}
+	}
+	desktopCheck();
+	//initSplash();
+	start();
+</script>
+<!--
+<div id="loginBox" class="mask login-box">
+	<div class="r5">
+		<div class="login-head">
+			<img src="./static/image/jeticon_logo.png" alt="多纷游戏"><span>游戏登录</span>
+		</div>
+		<div class="login-body">
+			<div>
+				<div id="userBox" class="flex active">
+					<i class="icod-user"></i><input class="flex-list" id="user" type="text" value="" placeholder="请输入多纷账号">
+				</div>
+				<div id="pwdBox" class="flex">
+					<i class="icod-lock"></i><input class="flex-list" id="pwd" type="password" value="" placeholder="请填写密码">
+				</div>
+				<div id="imgBox" class="code flex login-hide">
+					<i class="icod-yzm"></i><input id="imgCode"  type="text" placeholder="输入图片验证码"><img id="refreshCode" src="http://api.jet.netkingol.com/game/?gameid=1011" style="width:79px;height:29px" alt=""><em class="icod-load"></em>
+				</div>
+				<div id="smsBox" class="code flex login-hide">
+					<i class="icod-subyzm"></i><input id="smsCode" type="number" placeholder="请输入短信验证码"><a href="javascript:;" id="getCode">获取验证码</a>
+				</div>
+			</div>
+			<a href="javascript:;" class="btn" id="mBtn" data-type="jetLogin">登录</a>
+			<p id="suBtn" class="login-hide" data-type="smsLogin">
+				通过短信验证码登录
+			</p>
+			<div id="loginOption" class="flex flex-x-between login-hide">
+				<a href="javascript:;" id="forgetPwd">忘了密码?</a><a href="javascript:;" id="otherLogin">其他方式登录</a>
+			</div>
+			<fieldset class="">
+				<legend>其他登录方式</legend>
+			</fieldset>
+		</div>
+		<div class="login-mode">
+			<ol class="flex active">
+				<li class="flex-list " id="wxLogin" title="微信登录">
+				<div class="r50">
+					<i class="icod-wechat"></i>
+				</div>
+				</li>
+				<li class="flex-list list-show" id="wxQcLogin" title="微信扫码登录">
+				<div class="r50">
+					<i class="icod-wechat"></i>
+				</div>
+				</li>
+				<li class="flex-list qq list-show" id="qqLogin" title="QQ登录">
+				<div class="r50">
+					<i class="icod-qq"></i>
+				</div>
+				</li>
+				<li class="flex-list sina list-show" id="sinaLogin" title="新浪微博登录">
+				<div class="r50">
+					<i class="icod-sina"></i>
+				</div>
+				</li>
+				<li class="flex-list mobile list-show" id="mobileLogin" title="手机登录">
+				<div class="r50">
+					<i class="icod-mobile"></i>
+				</div>
+				</li>
+			</ol>
+			<a id="tagJetLogin" href="javascript:;" class="login-hide">多纷账号登录</a>
+		</div>
+	</div>
+</div>
+-->
+</body>
+</html>

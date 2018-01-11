@@ -1,0 +1,130 @@
+﻿LAN_Test 测试
+// zh-CN: 简体中文
+
+.LAN_SiteTitle	自由之战官网后台
+#LAN_Slogan		 	自由之战 @ GaeaMobile
+#LAN_FffMunuName 	自由之战
+
+
+#LAN_SysConfig			系统设置
+#LAN_UserPrivilegeManagement	用户权限管理
+#LAN_GameManagement		游戏管理	
+#LAN_ArticleManagement	栏目&文章管理
+#LAN_MaterialStation	资料站
+
+.LAN_Welcom		欢迎
+.LAN_ModifyUserinfo		修改用户信息
+.LAN_ModifyPassword		修改密码
+.LAN_Quit			退出
+.LAN_Login			登录
+.LAN_More			更多
+.LAN_All	全部
+.LAN_Time	时间
+.LAN_Detail	详情
+.LAN_Back	返回
+.LAN_User	用户
+.LAN_Nickname	昵称
+.LAN_UserName	用户名
+.LAN_Password	密码
+.LAN_Userpoint 用户积分
+.LAN_Old	原
+.LAN_New	新
+.LAN_Create 新建
+.LAN_Update 修改
+.LAN_Email	邮箱
+.LAN_Mobile	手机
+.LAN_Gender 性别
+.LAN_Man	男
+.LAN_Woman	女
+.LAN_View	查看
+.LAN_Show	显示
+.LAN_OK	确定
+.LAN_Submit	提交
+.LAN_Cancel	取消
+.LAN_Yes	是
+.LAN_No	否
+.LAN_Reset	重置
+.LAN_Confirm	确认
+.LAN_Register	注册
+.LAN_Add	添加
+.LAN_Edit	编辑
+.LAN_Delete	删除
+.LAN_Operation	操作
+.LAN_Management	管理
+.LAN_Role	角色
+.LAN_Privilege	权限
+.LAN_Pattern	模式
+.LAN_Intro	简介
+.LAN_Content	内容
+.LAN_Level	等级
+.LAN_Order	排序
+.LAN_Parent	父
+.LAN_News	新闻
+.LAN_Video	视频
+.LAN_Audio	音频
+.LAN_Media	媒体
+
+
+
+.LAN_FiltByHero	按英雄过滤
+.LAN_FiltByCatalog	按类目过滤
+.LAN_UploadImage	上传图片
+.LAN_UploadVideo	上传视频
+.LAN_OutLink	外链
+.LAN_ConfirmToDelete	是否确定删除?  (删除后点提交生效)？
+.LAN_ParamIncomplete	参数不全
+.LAN_MemberManagement	前台用户管理
+.LAN_TagManagement	标签管理
+.LAN_BackgroundUserManagement	后台用户管理
+.LAN_RoleManagement	角色管理
+.LAN_PrivilegeManagement	权限管理
+.LAN_SpecialPrivilege	特有权限管理
+.LAN_SystemVariables	系统变量
+.LAN_OperationLog	操作日志
+
+.LAN_ColumnManagement	类目管理
+.LAN_ArticleManagement	文章管理
+.LAN_AllArticles	所有文章
+.LAN_ColumnSubtitle	（请不要随意删除,层次最多六级）
+.LAN_Subnodes	子节点
+.LAN_AddSubnode	添加子节点
+.LAN_ArticleInfomation 资讯管理
+.LAN_Events 赛事活动
+.LAN_Strategy 攻略
+.LAN_PleaseSelectCatalog 请选择分类
+.LAN_Hero 英雄
+.LAN_Equipment	物品
+.LAN_SentStone	圣石
+.LAN_Talent	天赋
+.LAN_Honor	荣誉
+.LAN_Skill	技能
+.LAN_Picture	图片
+.LAN_PhysicalAttack	物理攻击
+.LAN_MagicAttack	魔法攻击
+.LAN_Defence	防御力
+.LAN_LearnDifficulty	学习难度
+.LAN_MediaSubtitle （名称相同为一组,组内以 “类型” 区分。外链优先）
+.LAN_EditGroup 编辑本组
+.LAN_Alias 	别名
+.LAN_Keyword 	关键字
+.LAN_Cache 	缓存
+.LAN_Width  宽
+.LAN_Height 高
+
+//datatables 
+.LAN_Group	组
+.LAN_Name	名称
+.LAN_Value	值
+.LAN_Type	类型
+.LAN_Integer 整形
+.LAN_Float	浮点
+.LAN_String	字符串
+
+.LAN_Type	类型
+.LAN_OperationIntro	操作概要
+.LAN_OperationTime	操作时间
+.LAN_ViewDetails	查看详情
+.LAN_OperationUser	操作人
+.LAN_PrevirousSnapshort 之前快照
+.LAN_CurentSnapshort	当前快照
+
