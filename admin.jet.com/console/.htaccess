@@ -1,7 +1,0 @@
-<IfModule mod_rewrite.c>
-        RewriteEngine On
-	RewriteCond %{REQUEST_URI} !^/static/*
-	RewriteCond %{REQUEST_URI} !^/index.html  
-        RewriteRule ^([\w\-\_\/\.]*)$       index.php [L]
-</IfModule>
- 
